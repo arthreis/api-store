@@ -5,7 +5,7 @@ const debug = require('debug')('nodestr:server');
 const express = require('express');
 
 const app = express();  //para iniciar  a aplicacao
-const port = 3000;
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port); //seta a porta que deve ser utilizado no app
 
 const server = http.createServer(app); //criar o servidor
@@ -21,3 +21,17 @@ app.use('/', route);
 
 server.listen(port); //pede pro servidor ficar ouvindo essa porta
 console.log("API rodando na porta "+ port);
+
+function normalizePort(val){
+    const port = parseInt(val,  10);
+
+    if(isNaN(port)){
+        return val;
+    }
+
+    if(port >= 0){
+        return port;
+    }
+
+    return false;
+}
