@@ -32,3 +32,8 @@ status codes utilizados
 
 npm i body-parser --save
 uma pacote que ajuda na conversao do corpo do request para o formato JSON.
+
+Learn BOOK [NoSql Distiled - Martin Fowler]
+
+npm install mongoose --save
+permite a criacao de colecoes a partir de um schema
