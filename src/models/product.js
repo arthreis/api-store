@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const schema = new Schema({
     //_id = criado automaticamente 'guid()'
@@ -12,7 +12,7 @@ const schema = new Schema({
     },
     slug:{
         type: String,
-        required: true,
+        required: [true, 'O slug é obrigatório'],
         trim: true,
         index: true,
         unique: true

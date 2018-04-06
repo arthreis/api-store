@@ -7,15 +7,23 @@ const router = express.Router(); //dada uma url o usuario chega na app
 
 //conecta no banco
 //mongoose.connect('mongodb://areis:areisndstoree@ds030719.mlab.com:30719/areis-ndstore');
-
+let database;
 mongoose.connect("mongodb://ds030719.mlab.com:30719/areis-ndstore",
     { 
         user: 'areis', 
         pass: 'areis#ndstore' 
     }, 
     function (err, db) {
-        db.close();
+        if(err){
+            return console.error(err);
+        }else{
+            console.log('Database connected!');
+        }
+        //db.close();
 });
+
+//carrega os Models
+const Product = require('./models/product')
 
 //carregar as rotas
 const indexRoute = require('./routes/index-route');
