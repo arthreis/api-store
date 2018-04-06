@@ -18,3 +18,17 @@ Dessa forma a importação do pacote é buscada da aplicacao levando em consider
 
 npm install nodemon --save-dev
 watcher para ficar observando quando os arquivos sao alterados e atualizar o servidor automaticamente.(OBS: o parametro -dev serve para que a dependencia nao seja enviado quando terminado desenvolvimento, fica em uma parte separada das dependencia da app)
+
+nodemon ./bin/server.js
+ativa o nodemon
+
+status codes utilizados
+200 = OK
+201 = CREATE
+400 = bad request
+401 = nao autenticado
+403 = acesso negado
+500 = internal server error
+
+npm i body-parser --save
+uma pacote que ajuda na conversao do corpo do request para o formato JSON.
