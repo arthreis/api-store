@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const app = require('../src/app');//pega o conteudo da variavel que foi exportado no caminho informado 'module.exports = app'
 const debug = require('debug')('nodestr:server');
@@ -10,8 +10,8 @@ app.set('port', port); //seta a porta que deve ser utilizado no app
 const server = http.createServer(app); //criar o servidor
 
 server.listen(port); //pede pro servidor ficar ouvindo essa porta
-server.on('error', onError);
-server.on('listening', onListener);
+server.on('error', onError);//caso o servidor pegue um erro e utilizado o metodo onError
+server.on('listening', onListening);
 console.log("API running on port :"+ port);
 
 function normalizePort(val){
@@ -48,7 +48,7 @@ function onError(error){
     }
 }
 
-function onListener(){
+function onListening(){
     const addr = server.address();
     const bind = typeof addr === 'string' ? 'pipe '+addr : 'port '+addr.port;
     debug('Listening on ' + bind);
