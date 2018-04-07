@@ -3,6 +3,16 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
+exports.getById = (req, res, next) => {   //listar todos os produtos
+    Product
+    .findById(req.params.id)
+    .then(data => {
+        res.status(200).send(data);
+    }).catch(e => {
+        res.status(400).send(e)
+    });
+}
+
 exports.getBySlug = (req, res, next) => {   //listar todos os produtos
     Product
     .findOne({
