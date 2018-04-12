@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
-exports.getById = (req, res, next) => {   //listar todos os produtos
+exports.getById = (req, res, next) => {
     Product
     .findById(req.params.id)
     .then(data => {
@@ -13,7 +13,7 @@ exports.getById = (req, res, next) => {   //listar todos os produtos
     });
 }
 
-exports.getBySlug = (req, res, next) => {   //listar todos os produtos
+exports.getBySlug = (req, res, next) => {
     Product
     .findOne({
         slug: req.params.slug,
@@ -28,7 +28,7 @@ exports.getBySlug = (req, res, next) => {   //listar todos os produtos
 
 exports.get = (req, res, next) => {   //listar todos os produtos
     Product
-    .find({active: true}, 'title price slug')
+    .find({active: true}, 'title price slug')   //atributos que serao mostrados
     .then(data => {
         res.status(200).send(data);
     }).catch(e => {
@@ -62,4 +62,17 @@ exports.put = (request, response, next) => {
 
 exports.delete = (request, response, next) => {
     response.status(200).send(request.body);
+};
+
+exports.getByTag = (req, res, next) => {
+    Product
+    .find({
+        tags: req.params.tag,
+        active: true
+    }, 'title description price slug tags')
+    .then(data => {
+        res.status(200).send(data);
+    }).catch(e => {
+        res.status(400).send(e);
+    })
 };
