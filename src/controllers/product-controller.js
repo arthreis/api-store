@@ -3,9 +3,9 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
 
-exports.getById = (req, res, next) => {
+exports.get = (req, res, next) => {   //listar todos os produtos
     Product
-    .findById(req.params.id)
+    .find({active: true}, 'title price slug')   //atributos que serao mostrados
     .then(data => {
         res.status(200).send(data);
     }).catch(e => {
@@ -26,15 +26,28 @@ exports.getBySlug = (req, res, next) => {
     });
 }
 
-exports.get = (req, res, next) => {   //listar todos os produtos
+exports.getById = (req, res, next) => {
     Product
-    .find({active: true}, 'title price slug')   //atributos que serao mostrados
+    .findById(req.params.id)
     .then(data => {
         res.status(200).send(data);
     }).catch(e => {
         res.status(400).send(e)
     });
 }
+
+exports.getByTag = (req, res, next) => {
+    Product
+    .find({
+        tags: req.params.tag,
+        active: true
+    }, 'title description price slug tags')
+    .then(data => {
+        res.status(200).send(data);
+    }).catch(e => {
+        res.status(400).send(e);
+    })
+};
 
 exports.post = (req, res, next) => {
     var product = new Product(req.body);
@@ -50,31 +63,6 @@ exports.post = (req, res, next) => {
                  data: e 
             })
         });
-};
-
-exports.put = (request, response, next) => {
-    let id = request.params.id;
-    response.status(201).send({
-        id: id,
-        item: request.body
-    });
-};
-
-exports.delete = (request, response, next) => {
-    response.status(200).send(request.body);
-};
-
-exports.getByTag = (req, res, next) => {
-    Product
-    .find({
-        tags: req.params.tag,
-        active: true
-    }, 'title description price slug tags')
-    .then(data => {
-        res.status(200).send(data);
-    }).catch(e => {
-        res.status(400).send(e);
-    })
 };
 
 exports.put = (req, res, next) => {
@@ -93,6 +81,21 @@ exports.put = (req, res, next) => {
         }).catch(e => {
             res.status(400).send({
                  message: 'Falha ao atualizar produto', 
+                 data: e 
+            })
+        });
+};
+
+exports.delete = (req, res, next) => {
+    Product
+        .findOneAndRemove(req.body.id)
+        .then(x => {
+            res.status(200).send({
+                 message: 'Produto removido com sucesso!' 
+            });
+        }).catch(e => {
+            res.status(400).send({
+                 message: 'Falha ao remover produto', 
                  data: e 
             })
         });
