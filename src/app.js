@@ -23,7 +23,8 @@ mongoose.connect("mongodb://ds030719.mlab.com:30719/areis-ndstore",
 });
 
 //carrega os Models
-const Product = require('./models/product')
+const Product  = require('./models/product')
+const Customer = require('./models/customer')
 
 //carregar as rotas
 const indexRoute = require('./routes/index-route');
