@@ -61,6 +61,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# lock #
+package-lock.json
 
 ### VisualStudioCode ###
 .vscode/*
