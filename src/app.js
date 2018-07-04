@@ -30,11 +30,13 @@ const Order = require('./models/order')
 //carregar as rotas
 const indexRoute = require('./routes/index-route');
 const productRoute = require('./routes/product-route');
+const customerRoute = require('./routes/customer-route');
 
 app.use(bodyParser.json());//todo o conteudo sera convertido para o JSON
 app.use(bodyParser.urlencoded({ extended: false }));//codificar as urls
 
 app.use('/', indexRoute);
 app.use('/products', productRoute);
+app.use('/customers', customerRoute);
 
 module.exports = app;
