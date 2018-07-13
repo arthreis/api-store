@@ -42,7 +42,7 @@ app.use(bodyParser.urlencoded({ extended: false }));//codificar as urls
 //Habilita o CORS
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin' , '*');//urls que vao acessar a api
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-acces-token');//headers permitidos
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-access-token');//headers permitidos
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     next();
 });
