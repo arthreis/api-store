@@ -1,39 +1,69 @@
-npm init -y
-cria arquivo de conf nodejs
+**api-store**
+----  
+* **URL**
 
-'use strict' 
-Usado no arquivo JS (Deixa a interpretação do js mais criteriosa, não deixando interpretar caso haja erro or falta de ; e  etc)
+  <_https://api-store.herokuapp.com/_>
+  
+**Customer**
+----  
+  Cria um cliente.
 
-npm install http express debug --save
+* **URL**
 
-pacote: express - cuida da parte do mvc
-pacote: debug - serve para debugar a app
-pacote: http - usado para criar o listener para ouvir uma porta e receber as requisicoes e respondelas.
+  /customers
 
-const http = require('http')
-Dessa forma a importação do pacote é buscada de dentro da pasta node_modules.
+* **Method:**
 
-const xpto = require('./minhaaplicacao/xpto')
-Dessa forma a importação do pacote é buscada da aplicacao levando em consideração as pastas.
+  `POST`
+  
+*  **URL Params**
+   None
 
-npm install nodemon --save-dev
-watcher para ficar observando quando os arquivos sao alterados e atualizar o servidor automaticamente.(OBS: o parametro -dev serve para que a dependencia nao seja enviado quando terminado desenvolvimento, fica em uma parte separada das dependencia da app)
+   **Required:** 
+   None
 
-nodemon ./bin/server.js
-ativa o nodemon
+* **Data Params**
+```javascript
+  {
+    "name": "Firstname Secondname",
+    "email" : "user@email.com",
+    "password": "123456"
+   }
+```
 
-status codes utilizados
-200 = OK
-201 = CREATE
-400 = bad request
-401 = nao autenticado
-403 = acesso negado
-500 = internal server error
+* **Success Response:**
 
-npm i body-parser --save
-uma pacote que ajuda na conversao do corpo do request para o formato JSON.
+  * **Code:** 201 CREATED<br />
+    **Content:** `{ message: 'Cliente cadastrado com sucesso!' }`
+ 
+* **Error Response:**
 
-Learn BOOK [NoSql Distiled - Martin Fowler]
+  * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ FIELD: 'FIELD MESSAGE ERROR' }`
 
-npm install mongoose --save
-permite a criacao de colecoes a partir de um schema
+  OR
+
+  * **Code:** 500 INTERNAL SERVER ERROR <br />
+    **Content:** `{ message: 'Falha ao processar sua requisição' }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/customers",
+      dataType: "json",
+      data: {
+              "name": "Firstname Secondname",
+              "email" : "user@email.com",
+              "password": "123456"
+            },
+      type : "POST",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+  
+  * **Notes:**
+
+  <__> 
