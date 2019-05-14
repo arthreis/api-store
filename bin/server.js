@@ -14,6 +14,9 @@ server.on('error', onError);//caso o servidor pegue um erro e utilizado o metodo
 server.on('listening', onListening);
 console.log("API running on port :"+ port);
 
+const nodeApiDocGenerator = require('node-api-doc-generator')
+nodeApiDocGenerator(app,'hostname',port);
+
 function normalizePort(val){
     const port = parseInt(val,  10);
 

@@ -1,0 +1,21 @@
+{
+  "name": "api-store documentation",
+  "version": "1.0.0",
+  "description": "API manager store",
+  "title": "api-store documentation",
+  "url" : "https://api-store.herokuapp.com",
+  "sampleUrl": "https://api-store.herokuapp.com",
+  "header": {
+    "title": "Introdution",
+    "filename": "header.md"
+  },
+  "footer": {
+    "title": "Notes",
+    "filename": "footer.md"
+  },
+  "template": {
+    "forceLanguage": "en",
+  	"withCompare": true,
+  	"withGenerator": true
+  }
+}

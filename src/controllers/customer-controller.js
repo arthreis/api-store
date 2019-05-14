@@ -6,6 +6,53 @@ const md5 = require('md5');
 const emailService = require('../services/email-service');
 const authService = require('../services/auth-service');
 
+/**
+ * @api {post} /customers/ Save a customer
+ * @apiName CreateCustomer
+ * @apiGroup Customers
+ * @apiVersion 0.0.1
+ * 
+ * @apiParam {String} name Mandatory Name of the customer.
+ * @apiParam {String} email Mandatory Email of the customer.
+ * @apiParam {String} password Mandatory Password of the customer.
+ * @apiParamExample {json} param example
+ * {
+ *   "name": "FirstName LastName",
+ *   "email" : "name@email.com",
+ *   "password": "123456"
+ * }
+ * 
+ * @apiSuccess {String} message Success message
+ * 
+ * @apiSucessExample {json} Success
+ * HTTP/1.1 201 Created
+ * {
+ *   "message": "Customer saved successfully!"
+ * }
+ * 
+ * @apiError NameHasMinLen The name must be at least <code>3</code> characters.
+ * @apiError isEmail Invalid email.
+ * @apiError PasswordHasMinLen The password must be at least <code>3</code> characters.
+ * @apiErrorExample {json} Error-Validation:
+ * HTTP/1.1 400 Bad Request
+ * [
+ *    {
+ *        "message": "O nome deve conter pelo menos 3 caracteres!"
+ *    },
+ *    {
+ *        "message": "E-mail inválido"
+ *    },
+ *    {
+ *        "message": "A senha deve conter pelo menos 3 caracteres!"
+ *    }
+ * ]
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 500 Internal Server Error
+ * {
+ *   "message": "Falha ao processar sua requisição"
+ * }
+ * 
+ */
 exports.post = async(req, res, next) => {
     
     let contract = new ValidationContract();
@@ -39,6 +86,44 @@ exports.post = async(req, res, next) => {
     }
 };
 
+/**
+ * @api {post} /customers/authenticate Authenticate a customer
+ * @apiName AuthenticateCustomer
+ * @apiGroup Customers
+ * @apiVersion 0.0.1
+ * 
+ * @apiParam {String} email Mandatory Email of the customer.
+ * @apiParam {String} password Mandatory Password of the customer.
+ * @apiParamExample {json} param example
+ * {
+ *   "email" : "name@email.com",
+ *   "password": "123456"
+ * }
+ * 
+ * @apiSuccess {String} message Success message
+ * 
+ * @apiSucessExample {json} Success
+ * HTTP/1.1 201 Created
+ * {
+ *    "token": "eyJhbGciOiJIUzI1NiIsI",
+ *    "data": {
+ *        "email" : "name@email.com",
+ *        "name": "FirstName LastName",
+ *    }
+ * }
+ * 
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Not Found
+ * {
+ *   "message": "Usuário ou senha inválidos"
+ * }
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 500 Internal Server Error
+ * {
+ *   "message": "Falha ao processar sua requisição"
+ * }
+ * 
+ */
 exports.authenticate = async(req, res, next) => {
     
     try {
@@ -75,6 +160,47 @@ exports.authenticate = async(req, res, next) => {
     }
 };
 
+/**
+ * @api {post} /customers/refresh-token Refresh token of a customer
+ * @apiName Refresh Token Customer
+ * @apiGroup Customers
+ * @apiVersion 0.0.1
+ * 
+ * @apiParam {String} token Mandatory Customer token.
+ * @apiHeader {String} x-access-token Token.
+ * @apiParamExample {json} param example
+ * {
+ *    "token": "eyJhbGciOiJIUzI1NiIsI",
+ * }
+ * 
+ * @apiSuccess {String} token New token
+ * 
+ * @apiSucessExample {json} Success
+ * HTTP/1.1 201 Created
+ * {
+ *    "token": "eyJhbGciOiJIUzI1NiIsI",
+ *    "data": {
+ *        "email" : "name@email.com",
+ *        "name": "FirstName LastName",
+ *    }
+ * }
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 401 Unauthorized
+ * {
+ *    "message": "Token inválido"
+ * }
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 404 Not Found
+ * {
+ *   "message": "Cliente não encontrado"
+ * }
+ * @apiErrorExample {json} Error-Response:
+ * HTTP/1.1 500 Internal Server Error
+ * {
+ *   "message": "Falha ao processar sua requisição"
+ * }
+ * 
+ */
 exports.refreshToken = async(req, res, next) => {
     try {
         //Recupera token

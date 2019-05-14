@@ -20,6 +20,7 @@
     "jsonwebtoken": "^7.4.0",
     "md5": "^2.2.1",
     "mongoose": "^5.0.13",
+    "node-api-doc-generator": "^1.1.1",
     "sendgrid": "^2.0.0"
   },
   "devDependencies": {
