@@ -7,7 +7,7 @@ const emailService = require('../services/email-service');
 const authService = require('../services/auth-service');
 
 /**
- * @api {post} /customers/ Save a customer
+ * @api {post} /customers/ Create
  * @apiName CreateCustomer
  * @apiGroup Customers
  * @apiVersion 0.0.1
@@ -15,7 +15,7 @@ const authService = require('../services/auth-service');
  * @apiParam {String} name Mandatory Name of the customer.
  * @apiParam {String} email Mandatory Email of the customer.
  * @apiParam {String} password Mandatory Password of the customer.
- * @apiParamExample {json} param example
+ * @apiParamExample {json} Request-Example:
  * {
  *   "name": "FirstName LastName",
  *   "email" : "name@email.com",
@@ -24,7 +24,7 @@ const authService = require('../services/auth-service');
  * 
  * @apiSuccess {String} message Success message
  * 
- * @apiSucessExample {json} Success
+ * @apiSuccessExample {json} Response-Success
  * HTTP/1.1 201 Created
  * {
  *   "message": "Customer saved successfully!"
@@ -87,22 +87,25 @@ exports.post = async(req, res, next) => {
 };
 
 /**
- * @api {post} /customers/authenticate Authenticate a customer
+ * @api {post} /customers/authenticate Authenticate
  * @apiName AuthenticateCustomer
  * @apiGroup Customers
  * @apiVersion 0.0.1
  * 
  * @apiParam {String} email Mandatory Email of the customer.
  * @apiParam {String} password Mandatory Password of the customer.
- * @apiParamExample {json} param example
+ * @apiParamExample {json} Request-Example:
  * {
  *   "email" : "name@email.com",
  *   "password": "123456"
  * }
  * 
- * @apiSuccess {String} message Success message
+ * @apiSuccess {String} token Token value.
+ * @apiSuccess {Object[]} data Params.
+ * @apiSuccess {String} data.email Email of the customer.
+ * @apiSuccess {String} data.name Name of the customer.
  * 
- * @apiSucessExample {json} Success
+ * @apiSuccessExample {json} Response-Success
  * HTTP/1.1 201 Created
  * {
  *    "token": "eyJhbGciOiJIUzI1NiIsI",
@@ -112,12 +115,12 @@ exports.post = async(req, res, next) => {
  *    }
  * }
  * 
- * @apiErrorExample {json} Error-Response:
+ * @apiErrorExample {json} Error-Authenticate:
  * HTTP/1.1 404 Not Found
  * {
  *   "message": "Usuário ou senha inválidos"
  * }
- * @apiErrorExample {json} Error-Response:
+ * @apiErrorExample {json} Error-Internal:
  * HTTP/1.1 500 Internal Server Error
  * {
  *   "message": "Falha ao processar sua requisição"
@@ -161,21 +164,21 @@ exports.authenticate = async(req, res, next) => {
 };
 
 /**
- * @api {post} /customers/refresh-token Refresh token of a customer
- * @apiName Refresh Token Customer
+ * @api {post} /customers/refresh-token Refresh token
+ * @apiName RefreshTokenCustomer
  * @apiGroup Customers
  * @apiVersion 0.0.1
  * 
- * @apiParam {String} token Mandatory Customer token.
+ * @apiParam {String} token Customer token.
  * @apiHeader {String} x-access-token Token.
- * @apiParamExample {json} param example
+ * @apiParamExample {json} Request-Example:
  * {
  *    "token": "eyJhbGciOiJIUzI1NiIsI",
  * }
  * 
  * @apiSuccess {String} token New token
  * 
- * @apiSucessExample {json} Success
+ * @apiSuccessExample {json} Response-Success
  * HTTP/1.1 201 Created
  * {
  *    "token": "eyJhbGciOiJIUzI1NiIsI",
@@ -184,17 +187,17 @@ exports.authenticate = async(req, res, next) => {
  *        "name": "FirstName LastName",
  *    }
  * }
- * @apiErrorExample {json} Error-Response:
+ * @apiErrorExample {json} Error-Unauthorized:
  * HTTP/1.1 401 Unauthorized
  * {
  *    "message": "Token inválido"
  * }
- * @apiErrorExample {json} Error-Response:
+ * @apiErrorExample {json} Error-Not-Found:
  * HTTP/1.1 404 Not Found
  * {
  *   "message": "Cliente não encontrado"
  * }
- * @apiErrorExample {json} Error-Response:
+ * @apiErrorExample {json} Error-Internal:
  * HTTP/1.1 500 Internal Server Error
  * {
  *   "message": "Falha ao processar sua requisição"
